@@ -38,8 +38,6 @@ trait ElasticquentTrait
      */
     protected $documentScore = null;
     
-    protected $parentRelation = false;
-
     /**
      * Document Version
      *
@@ -180,7 +178,7 @@ trait ElasticquentTrait
     
     public function getParentRelation()
     {
-        return $this->parentRelation;
+        return (isset($this->parentRelation)) ? $this->parentRelation : false;
     }
 
     /**
