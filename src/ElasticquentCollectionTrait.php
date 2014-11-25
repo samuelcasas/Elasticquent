@@ -25,14 +25,27 @@ trait ElasticquentCollectionTrait
         $params = array();
 
         foreach ($this->all() as $item) {
-
-            $params['body'][] = array(
-                'index' => array(
-                    '_id' => $item->getKey(),
-                    '_type' => $item->getTypeName(),
-                    '_index' => $item->getIndexName()
-                )
-            );
+            if($item->getParentRelation())
+            {
+                $params['body'][] = array(
+                    'index' => array(
+                        '_id' => $item->getKey(),
+                        '_type' => $item->getTypeName(),
+                        '_index' => $item->getIndexName(),
+                        '_parent' => $item->getParentRelation()
+                    )
+                );   
+            }
+            else
+            {
+                $params['body'][] = array(
+                    'index' => array(
+                        '_id' => $item->getKey(),
+                        '_type' => $item->getTypeName(),
+                        '_index' => $item->getIndexName()
+                    )
+                );
+            }
 
             $params['body'][] = $item->getIndexDocumentData();
         }
